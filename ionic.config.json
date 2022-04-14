@@ -1,0 +1,7 @@
+{
+  "name": "prajjo-attendance",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
