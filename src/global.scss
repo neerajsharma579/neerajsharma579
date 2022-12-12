@@ -24,3 +24,249 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.horizontal-cards {
+  ion-card {
+      display: inline-block;
+      width: 165px;
+  }
+  ion-card img{
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.card-background-page {
+  ion-card {
+    position: relative;
+    text-align: center;
+    width: 44%;
+  }
+
+  .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+}
+
+.crdTitle{
+  font-size: 14px;
+  font-weight: 600;
+}
+.col-6{width: 50%;}
+
+/* Login Page  */
+.login-header {
+  position: relative;
+  background: var(--theme-color);
+  border-radius: 0em;
+}
+.login-header:after {
+  content: '';
+  position: absolute;
+  left: 15%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-top-color: var(--theme-color);
+  border-bottom: 0;
+  margin-left: -15px;
+  margin-bottom: -15px;
+}
+.logo-img {
+  display: block;
+  width: 120px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+[heading-column-lr] {
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+}
+[big-heading] {
+  font-family: 'Heebo-Bold' !important;
+  font-size: 30px !important;
+  color: var(--theme-black);
+  text-align: center;
+}
+
+[small-heading] {
+  font-family: 'Heebo-Regular' !important;
+  margin-left: auto;
+  padding-right: 40px;
+  font-size: 15px;
+}
+
+ion-label {
+  color: #000;
+  opacity: 0.8;
+  font-size: 13px;
+  display: block;
+  margin-top: 17px;
+  font-weight: 700;
+}
+ion-content {
+  --background: #fafafa;
+}
+[transparent] {
+  --background: transparent;
+}
+ion-input {
+  --color: #000;
+  --padding-bottom: 15px;
+  --padding-top: 15px;
+  --padding-start: 5px;
+  font-size: 15px;
+  text-indent: 1px;
+  //padding-left: 10px !important;
+}
+[icon-small] {
+  width: 30px;
+}
+ion-item {
+  --highlight-color-invalid: #000;
+  --padding-start: 0;
+  margin-top: 9px;
+}
+[linespace] {
+  height: 15px;
+}
+ion-label {
+  color: #000;
+  opacity: 0.8;
+  font-size: 13px;
+  display: block;
+}
+.item-highlight{
+  border-style: none!important;
+}
+ion-color-base{
+  color: var(--theme-color) !important;
+}
+.error{
+  color:red;
+  text-align: center;
+  border-radius: 5px;
+}
+.success{
+  color:green;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.col-4{width: 33%;}
+
+[icon-small] {
+width: 30px;
+}
+.imgCls{
+width:90px!important;
+height:80px!important;
+}
+ion-color-base{
+  color: var(--theme-color) !important;
+}
+.error{
+color:red;
+text-align: center;
+// border: 1px solid rosybrown;
+border-radius: 5px;
+}
+
+.col-4{width: 33%;}
+
+[icon-small] {
+width: 30px;
+}
+.imgCls{
+width:90px!important;
+height:80px!important;
+}
+[ioncol]{border-style: groove;}
+[ionrow-color]{background-color: green; color: #fff;}
+
+[ionItem-btm-space]{ margin-bottom: 15px;}
+[ionInput]{padding: 10px 0px 18px 5px!important;}
+[ionbtn]{width: 95px;}
+
+.mrt{margin-top: 9px;}
+.forget-password {
+  color: #000;
+  font-size: 15px;
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+.pwd-change-msg {
+  color: #000;
+  font-size: 20px;
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+.text-right {
+  text-align: right;
+}
+.mtr-7{margin-top: 7px;}
+
+@keyframes blink {
+  50% { border-color: #ff0000; }
+}
+.bdr{border: 2px solid rgb(104, 76, 64);
+  padding: 7px;
+  animation: blink .5s step-end infinite alternate;
+}
+.middleheading{
+  font-weight: bold;
+  background-color: #dddddd;
+  padding: 5px;
+  text-align: center;
+}
+.parchi-txt{font-size: 11px;}
+.mtr-18{margin-top: 18px;}
+.mtr-b{margin-top: -15px;margin-bottom: -11px;}
+.hdr-bold{font-weight: bold;font-size: 12px;}
+.accor-grd-space{margin-top: -18px;margin-bottom: -25px;}
+.scroll {overflow-x: hidden;overflow-y: auto;max-height: 330px;}
+.grd-txt{font-size: 11px;}
+.ioncol{background-color: #efefef; margin-top: 20px;}
+.ionlbl{font-weight: bold;font-size: 16px;margin-top: 2px;}
+.btn-mtrl{margin-left: -5px;}
+.loader{text-align: center;font-size: 25px; color: blue;}
+body{margin-top: 10%;}
+ion-radio {
+  --border-radius: 4px;
+  --inner-border-radius: 4px;
+
+  --color: #ddd;
+  --color-checked: #6815ec;
+}
+
+ion-radio.ios {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}
+
+.radio-checked.ios {
+  border-color: #6815ec;
+}
+
+.hdr{margin-left: -60px; font-weight: 600;text-align: center;}
+.txtArea{margin-left: 10px;}

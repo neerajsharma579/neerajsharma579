@@ -1,0 +1,45 @@
+<ion-item transparent style="display: none;">
+  <ion-label class="mrt">किसान कोड</ion-label>
+  <ion-input type="tel" inputmode="numeric" [value]="kisanInfo.Code" placeholder="किसान कोड डालें"
+    [disabled]="disableCode" maxlength="15" autofocus="true" clearInput></ion-input>
+</ion-item>
+
+<ion-item transparent ionItem-btm-space>
+  <ion-label class="mrt">किसान का नाम</ion-label>
+  <ion-input [value]="kisanInfo.Name" placeholder="किसान का नाम" disabled type="text"></ion-input>
+</ion-item>
+
+<ion-item transparent>
+  <ion-label class="mrt">पिता का नाम</ion-label>
+  <ion-input [value]="kisanInfo.FName" placeholder="पिता का नाम" disabled type="text"></ion-input>
+</ion-item>
+
+<ion-item transparent>
+  <ion-label class="mrt">गांव का नाम</ion-label>
+  <ion-input [value]="kisanInfo.VName" placeholder="गांव का नाम" disabled type="text"></ion-input>
+</ion-item>
+
+<ion-accordion-group>
+  <ion-accordion value="first">
+    <ion-item slot="header" color="light">
+      <ion-label class="mrt">केंद्र का नाम: {{kisanInfo.CName}}</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-item transparent>
+        <!-- <img icon-small src="assets/img/village-icon.png" /> -->
+        <ion-label class="mrt">आपूर्ति का साधन</ion-label>
+        <ion-input [value]="kisanInfo.Mode" placeholder="आपूर्ति का साधन" disabled type="text"></ion-input>
+      </ion-item>
+      <ion-item transparent>
+        <!-- <img icon-small src="assets/img/village-icon.png" /> -->
+        <ion-label class="mrt">बैंक का नाम</ion-label>
+        <ion-input [value]="kisanInfo.Bank" placeholder="बैंक का नाम" disabled type="text"></ion-input>
+      </ion-item>
+      <ion-item transparent>
+        <!-- <img icon-small src="assets/img/village-icon.png" /> -->
+        <ion-label class="mrt">खाता संख्या</ion-label>
+        <ion-input [value]="kisanInfo.AccountNoMasked" placeholder="खाता संख्या" disabled type="text"></ion-input>
+      </ion-item>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>

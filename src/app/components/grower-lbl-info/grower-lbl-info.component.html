@@ -1,0 +1,42 @@
+<ion-item slot="header" color="light">
+  <ion-label>किसान विवरण</ion-label>
+</ion-item>
+
+<div slot="content" class="accor-grd-space">
+  <ion-col size="12">
+    <ion-grid>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">किसान कोड</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.Code}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">किसान का नाम</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.Name}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">पिता का नाम</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.FName}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">गांव का नाम</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.VName}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">केंद्र का नाम</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.CName}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">आपूर्ति का साधन</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.Mode}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">बैंक का नाम</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.Bank}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col ioncol class="hdr-bold" size="4">खाता संख्या</ion-col>
+        <ion-col ioncol class="parchi-txt">{{gInfo.AccountNoMasked}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-col>
+</div>

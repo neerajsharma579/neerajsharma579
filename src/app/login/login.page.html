@@ -1,0 +1,57 @@
+<!-- <ion-header no-border style="position: relative">
+    <div class="login-header ion-padding">
+    <img class="logo-img" src="assets/img/logo.png">
+  </div>
+</ion-header> -->
+<div *ngIf="errorMessage">
+  <ion-header translucent="true">
+    <ion-toolbar>
+      <div *ngIf="errorMessage" class="error">{{errorMessage}}</div>
+    </ion-toolbar>
+  </ion-header>
+</div>
+<ion-content fullscreen>
+  <ion-row class="ion-margin">
+    <ion-col size="12">
+      <h1 big-heading>Login</h1>
+      <ion-item transparent>
+        <ion-label>किसान कोड</ion-label>
+        <ion-input [(ngModel)]="gCode" placeholder="किसान सर्वे नंबर / किसान कोड डालें" type="tel" inputmode="numeric"
+          [disabled]="disableCode" required class="mtr-7" maxlength="15" #loginInput autofocus="true" clearInput>
+        </ion-input>
+      </ion-item>
+
+      <ion-item transparent>
+        <ion-label>पासवर्ड</ion-label>
+        <ion-input type="Password" [(ngModel)]="gPassword" placeholder="पासवर्ड डालें" required class="mtr-7"
+          clearInput>
+        </ion-input>
+      </ion-item>
+      <div linespace></div>
+      <ion-label class="forget-password"> किसान का पहला पासवर्ड - बैंक खाते के आखिरी चार अंक</ion-label>
+      <div linespace></div>
+      <ion-row style="text-align-last:center;">
+        <div class="col-4">
+          <ion-button center ionbtn color="primary" (click)="KishaanLogin()">किसान
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="col-4">
+          <ion-button center ionbtn color="primary" (click)="KaramchariLogin()">कर्मचारी
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="col-4">
+          <ion-button center ionbtn color="primary" (click)="GuestLogin()">अतिथि
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-row>
+      <div linespace></div>
+      <p class="bdr" *ngIf="gMessage">{{gMessage}}</p>
+      <div linespace></div>
+      <img src="assets/img/digital-kishan.png" style="width:100%!important; height:300px !important" />
+      <ion-label class="pwd-change-msg">अपना पासवर्ड अवश्य बदल ले</ion-label>
+    </ion-col>
+  </ion-row>
+</ion-content>

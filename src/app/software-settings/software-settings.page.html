@@ -1,0 +1,235 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="hdr">सॉफ्टवेयर नियंत्रण</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="message" style="margin-top: 15px;;">
+  <ion-header translucent="true">
+    <ion-toolbar>
+      <div *ngIf="message" [ngClass]="dynamicClass" style="text-align: center;">{{message}}</div>
+    </ion-toolbar>
+  </ion-header>
+</div>
+
+<ion-content>
+  <ion-row class="ion-margin mb-100">
+    <ion-col size="12">
+      <ion-accordion-group [value]="['first']">
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light" style="margin-top: -10px;">
+            <ion-label style="margin-left: 10px;">{{lblHeaderHeading}}</ion-label>
+          </ion-item>
+
+          <div class="ion-padding" slot="content">
+            <ion-row>
+              <ion-col size="12">
+                <ion-list>
+                  <ion-radio-group value="2" (ionChange)="radioChangeHandler($event)">
+                    <ion-radio value="1"></ion-radio> कार्ड नंबर
+                    <ion-radio value="2"></ion-radio> पर्ची नंबर
+                    <ion-radio value="3"></ion-radio> ट्रक टोकन
+                  </ion-radio-group>
+                </ion-list>
+              </ion-col>
+              <ion-col size="8">
+                <ion-item transparent>
+                  <ion-input type="tel" inputmode="numeric" maxlength="10" [(ngModel)]="CardNumber" clearInput>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="4">
+                <ion-button color="primary" class="mtr-18" (click)="GetTokenDetail(CardNumber)"
+                  [disabled]="!CardNumber">
+                  विवरण देखे
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12">
+                <div *ngIf="isCartInfo">
+                  <ion-item slot="header" color="light">
+                    <ion-label style="margin-left: 10px;">{{lblHeading}}</ion-label>
+                  </ion-item>
+
+                  <ion-col size="12">
+                    <ion-label class="ionlbl">वाहन का प्रकार - {{TokenInfo.VehicleType}}</ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">टोकन नंबर</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.TokenNo }}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">टोकन तिथि</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.TokenDate | date:'dd/MM/yyyy'}}
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">किसान कोड</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.GrowerCode }}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची नंबर</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.PurchyNo }}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची तिथि</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.PurchyDate | date:'dd/MM/yyyy'}}
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">केंद्र का नाम</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.CentreName}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">प्रजाति</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.Category}}
+                          ({{TokenInfo.CaneToken.Variety}})
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">आपूर्ति</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.Mode}}</ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-button color="primary" class="mtr-18" (click)="DeleteToken()"
+                      [disabled]="TokenInfo.GrossNo || TokenInfo.TareNo">डिलीट टोकन
+                    </ion-button>
+                    <ion-button color="primary" class="mtr-18" (click)="DeleteGross()" *ngIf="TokenInfo.GrossNo"
+                      [disabled]="TokenInfo.TareNo">डिलीट ग्रॉस
+                    </ion-button>
+                    <ion-button color="primary" class="mtr-18" (click)="DeleteTare()" *ngIf="TokenInfo.TareNo">डिलीट
+                      टेयर
+                    </ion-button>
+                  </ion-col>
+                </div>
+
+                <div *ngIf="isTruckInfo">
+                  <ion-item slot="header" color="light">
+                    <ion-label style="margin-left: 10px;">{{lblHeading}}</ion-label>
+                  </ion-item>
+
+                  <ion-col size="12">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">टोकन नंबर</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.TokenNo }}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">टोकन तिथि</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.TokenDate |
+                          date:'dd/MM/yyyy'}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">किसान कोड</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.GrowerCode }}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची नंबर</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.PurchyNo }}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची तिथि</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.PurchyDate |
+                          date:'dd/MM/yyyy'}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">केंद्र का नाम</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.CentreName}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">प्रजाति</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.Category}}
+                          ({{TokenInfo.CaneToken.Variety}})
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">आपूर्ति</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.CaneToken.Mode}}</ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-button color="primary" class="mtr-18" (click)="DeleteToken()"
+                      [disabled]="TokenInfo.GrossNo || TokenInfo.TareNo">डिलीट टोकन
+                    </ion-button>
+                    <ion-button color="primary" class="mtr-18" (click)="DeleteGross()" *ngIf="TokenInfo.GrossNo"
+                      [disabled]="TokenInfo.TareNo">डिलीट ग्रॉस
+                    </ion-button>
+                    <ion-button color="primary" class="mtr-18" (click)="DeleteTare()" *ngIf="TokenInfo.TareNo">डिलीट
+                      टेयर
+                    </ion-button>
+                    <!-- <ion-icon name="trash-outline" ></ion-icon> -->
+                  </ion-col>
+                </div>
+
+                <div *ngIf="isPurchiInfo">
+                  <ion-item slot="header" color="light">
+                    <ion-label style="margin-left: 10px;">{{lblHeading}}</ion-label>
+                  </ion-item>
+
+                  <ion-col size="12">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची दिनांक</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.Purchy_Date | date:'dd/MM/yyyy'}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">प्रजाति</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.VarietyTypeName}} {{TokenInfo.RatoonName}}
+                          ({{TokenInfo.Var_Name}} )</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची क्रामांक</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.PurchyIndex}}/{{TokenInfo.Purchy}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">प्रतिशत</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.Per}}</ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col ioncol class="hdr-bold" size="4">पर्ची स्थिति</ion-col>
+                        <ion-col ioncol class="parchi-txt">{{TokenInfo.StatusName}}</ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                  <grower-lbl-info [gInfo]="growerInfo" *ngIf="isPurchiInfo"></grower-lbl-info>
+                </div>
+
+                <div *ngIf="isRemarkVisible">
+                  <ion-item slot="header" color="light">
+                    <ion-label style="margin-left: 10px;">टिप्पणी</ion-label>
+                  </ion-item>
+
+                  <ion-col size="12">
+                    <ion-textarea placeholder="Remarks" maxlength="50" #remarkTextInput class="mtr-7 txtArea">
+                    </ion-textarea>
+                  </ion-col>
+
+                  <ion-col size="12">
+                    <ion-select placeholder="Select Command" (ionChange)="anyFunc($event)">
+                      <ion-select-option *ngFor="let pc of purchiCommand" value="{{pc.Code}}">
+                        {{pc.Name}}</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-button color="primary" class="mtr-18" style="float: right;" (click)="showConfirm()">सबमिट करें
+                    </ion-button>
+                  </ion-col>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-col>
+  </ion-row>
+</ion-content>

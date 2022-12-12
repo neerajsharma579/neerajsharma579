@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="hdr">डैशबोर्ड</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <ion-row>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Survey">
+        <ion-card color="light" (click)="NextScreen('survey')" [disabled]="!accessType.Survey">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">गन्ने का सर्वे</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/survey-kishan.png" />
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Bond">
+        <ion-card color="light" (click)="NextScreen('bond')" [disabled]="!accessType.Bond">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">गन्ने का बोंड़</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/kisan-bond.png">
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Yard">
+        <ion-card color="light" (click)="NextScreen('yard')" [disabled]="!accessType.Yard">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">यार्ड की स्थिति</ion-card-title>
+          </ion-card-header>
+          <!--<ion-icon name="subway"></ion-icon>-->
+          <img class="imgCls" src="/assets/img/farmer-ride-tractor.jpg" />
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Crushing">
+        <ion-card color="light" (click)="NextScreen('crushing')" [disabled]="!accessType.Crushing">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">पिराई के आकड़े</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/sugar-crushing.jpg">
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Indent">
+        <ion-card color="light" (click)="NextScreen('purchy-status')" [disabled]="!accessType.Indent">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">पर्चियों की स्थिति</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/calander.png">
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Deposit">
+        <ion-card color="light" (click)="NextScreen('purchy-deposit')" [disabled]="!accessType.Deposit">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">पर्ची जमा करें</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/deposite.png">
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Payment">
+        <ion-card color="light" (click)="NextScreen('grower-payment')" [disabled]="!accessType.Payment">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">भुगतान</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/bhugtaan.jpeg" />
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Settings">
+        <ion-card color="light" (click)="NextScreen('scontrol')" [disabled]="!accessType.Settings">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">सॉफ्टवेयर नियंत्रण</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/software.png">
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Password">
+        <ion-card color="light" (click)="NextScreen('cpassword')" [disabled]="!accessType.Password">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">पासवर्ड</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/lock.png" />
+        </ion-card>
+      </div>
+      <div class="col-6 ion-text-center" *ngIf="accessType.Logout">
+        <ion-card color="light" (click)="logout()" [disabled]="!accessType.Logout">
+          <ion-card-header>
+            <ion-card-title class="crdTitle">बाहर निकले</ion-card-title>
+          </ion-card-header>
+          <img class="imgCls" src="/assets/img/logout.png">
+        </ion-card>
+      </div>
+    </ion-row>
+  </div>
+</ion-content>

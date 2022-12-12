@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="hdr">भुगतान</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row class="ion-margin">
+    <ion-col size="9">
+      <ion-item transparent>
+        <ion-label class="mrt">किसान कोड</ion-label>
+        <ion-input type="tel" inputmode="numeric" maxlength="15" [(ngModel)]="gCode" [disabled]="isDisble" clearInput>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button color="primary" class="mtr-18 btn-mtrl" (click)="growerData()" [disabled]="!gCode">विवरण देखे
+      </ion-button>
+    </ion-col>
+    <div linespace></div>
+    <ion-col size="12" *ngIf="isShowHide">
+      <grower-lbl-info [gInfo]="growerInfo"></grower-lbl-info>
+    </ion-col>
+    <div linespace></div>
+    <ion-col size="12" *ngIf="isShowHide">
+      <ion-grid>
+        <ion-row ionrow-color>
+          <ion-col size="1.5">
+            शीट
+          </ion-col>
+          <ion-col size="2.6">
+            भुग. तिथि
+          </ion-col>
+          <ion-col size="2.7">
+            पर्ची राशि
+          </ion-col>
+          <ion-col size="2.5">
+            कटौती
+          </ion-col>
+          <ion-col size="2.7">
+            कुल राशि
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of gPaymentInfo">
+          <ion-col ioncol size="1.3">
+            {{row.Sheet}}
+          </ion-col>
+          <ion-col ioncol size="2.6">
+            {{row.PayDate | date:'dd/MM/yy'}}
+          </ion-col>
+          <ion-col ioncol size="2.8">
+            {{row.Amount | number : '1.2-2'}}
+          </ion-col>
+          <ion-col ioncol size="2.5">
+            {{row.Deduction | number : '1.2-2'}}
+          </ion-col>
+          <ion-col ioncol size="2.8">
+            {{row.PaidAmount | number : '1.2-2'}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+  </ion-row>
+</ion-content>

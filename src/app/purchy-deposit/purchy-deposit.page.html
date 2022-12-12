@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="hdr">पुरानी पर्ची जमा करें</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="message" style="margin-top: 15px;;">
+  <ion-header translucent="true">
+    <ion-toolbar>
+      <div *ngIf="message" class="error">{{message}}</div>
+    </ion-toolbar>
+  </ion-header>
+</div>
+
+<ion-content>
+  <ion-row class="ion-margin">
+    <ion-col size="8">
+      <ion-item transparent>
+        <ion-label class="mrt">पर्ची नंबर</ion-label>
+        <ion-input type="tel" inputmode="numeric" maxlength="10" [(ngModel)]="purchyNumber" clearInput>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button color="primary" class="mtr-18" (click)="growerPurchy(purchyNumber)"
+        [disabled]="!purchyNumber || isDisable">विवरण देखे
+      </ion-button>
+    </ion-col>
+    <div linespace></div>
+    <ion-col size="12" class="ioncol" *ngIf="isShow">
+      <ion-label class="ionlbl">पर्ची विवरण</ion-label>
+    </ion-col>
+    <div linespace></div>
+    <ion-col size="12" *ngIf="isShow">
+      <ion-grid>
+        <ion-row>
+          <ion-col ioncol class="hdr-bold" size="4">पर्ची दिनांक</ion-col>
+          <ion-col ioncol class="parchi-txt">{{gParchiInfo.Purchy_Date | date:'dd/MM/yyyy'}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col ioncol class="hdr-bold" size="4">प्रजाति</ion-col>
+          <ion-col ioncol class="parchi-txt">{{gParchiInfo.VarietyTypeName}} {{gParchiInfo.RatoonName}}
+            ({{gParchiInfo.Var_Name}} )</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col ioncol class="hdr-bold" size="4">पर्ची क्रामांक</ion-col>
+          <ion-col ioncol class="parchi-txt">{{gParchiInfo.PurchyIndex}}/{{gParchiInfo.Purchy}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col ioncol class="hdr-bold" size="4">प्रतिशत</ion-col>
+          <ion-col ioncol class="parchi-txt">{{gParchiInfo.Per}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+    <ion-col size="12" *ngIf="isShow">
+      <grower-lbl-info [gInfo]="growerInfo"></grower-lbl-info>
+    </ion-col>
+    <ion-col size="12" *ngIf="isShow">
+      <ion-button color="primary" class="mtr-18" (click)="depositPurchy(purchyNumber)">जमा करे</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

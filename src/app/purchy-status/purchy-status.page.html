@@ -1,0 +1,340 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="hdr">पर्चियों की स्थिति</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row class="ion-margin">
+    <ion-col size="9">
+      <ion-item transparent>
+        <ion-label class="mrt">किसान कोड</ion-label>
+        <ion-input type="tel" inputmode="numeric" maxlength="15" [(ngModel)]="gCode" [disabled]="isDisble" clearInput>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button color="primary" class="mtr-18 btn-mtrl" (click)="loadData()" [disabled]="!gCode">विवरण देखे
+      </ion-button>
+    </ion-col>
+    <!-- <ion-col size="12">
+      <ion-button color="primary" (click)="getSupply(gCode)">सप्लाई कैलेंडर</ion-button>
+      <ion-button color="primary" (click)="getCalendarDetails()">संपूर्ण कैलेंडर</ion-button>
+      <ion-button color="primary">बगैर सप्लाई कैलेंडर</ion-button>
+    </ion-col> -->
+    <ion-col size="12" *ngIf="isLoader">
+      <ion-label class="loader">Loading...</ion-label>
+    </ion-col>
+
+    <ion-col size="12" *ngIf="isShowHide">
+      <ion-accordion-group [multiple]="true" [value]="accorVal" style="margin-bottom: 20px;">
+        <ion-accordion value="first">
+          <!-- {{growerInfo|json}} -->
+          <!-- <grower-lbl-info [gInfo]="growerInfo"></grower-lbl-info> -->
+          <ion-item slot="header" color="light">
+            <ion-label>किसान विवरण</ion-label>
+          </ion-item>
+          <div slot="content" class="accor-grd-space">
+            <ion-col size="12">
+              <ion-grid>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">किसान कोड</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.Code}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">किसान का नाम</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.Name}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">पिता का नाम</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.FName}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">गांव का नाम</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.VName}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">केंद्र का नाम</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.CName}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">आपूर्ति का साधन</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.Mode}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">बैंक का नाम</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.Bank}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold" size="4">खाता संख्या</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{growerInfo.AccountNoMasked}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header" color="light">
+            <ion-label>कैलेंडर विवरण</ion-label>
+          </ion-item>
+          <div slot="content" class="accor-grd-space">
+            <ion-col size="12">
+              <ion-grid>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold">नई जारी की गई पर्ची</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{calSummary.NewPurchy}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold">आज सप्लाई योग्य पर्ची</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{calSummary.TodayPurchy}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold">पुरानी (अवधि समाप्त) पर्ची</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{calSummary.ExpiredPurchy}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold">जमा पुरानी पर्ची</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{calSummary.DepositPurchy}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol class="hdr-bold">बगैर जमा पुरानी पर्ची</ion-col>
+                  <ion-col ioncol class="parchi-txt">{{calSummary.NonDepositedExpiredPurchy}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label class="mtr-b middleheading">कैलेंडर की वर्तमान स्थिति</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-grid>
+                <ion-row>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">अगेती मूढा : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_ER}}</p>
+                  </ion-col>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">अगेती बोया : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_EP}}</p>
+                  </ion-col>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">अगेती ऑटम : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_EA}}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">मध्यम मूढा : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_MR}}</p>
+                  </ion-col>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">मध्यम बोया : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_MP}}</p>
+                  </ion-col>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">मध्यम ऑटम : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_MA}}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">पछेती मूढा : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_GR}}</p>
+                  </ion-col>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">पछेती बोया : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_GP}}</p>
+                  </ion-col>
+                  <ion-col ioncol size="4">
+                    <ion-label class="item-name mrt">पछेती ऑटम : </ion-label>
+                    <p class="parchi-txt">{{calSummary.Cal_GA}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="third">
+          <ion-item slot="header" color="light">
+            <ion-label>सप्लाई विवरण</ion-label>
+          </ion-item>
+          <div slot="content">
+            <ion-row ionrow-color>
+              <ion-col size="1.3" class="grd-txt" style="margin-left: 8px;">
+                क्रम
+              </ion-col>
+              <ion-col size="1.5" class="grd-txt">
+                प्रजाति
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                पर्ची नं.
+              </ion-col>
+              <!-- <ion-col class="grd-txt">
+                पर्ची तिथि
+              </ion-col> -->
+              <ion-col size="2.8" class="grd-txt">
+                आपूर्ति तिथि
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                कुल वजन
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                शुद्ध वजन
+              </ion-col>
+            </ion-row>
+            <ion-grid *ngIf="calSupply.length > 0" class="scroll">
+              <ion-row *ngFor="let row of calSupply">
+                <ion-col ioncol size="1.5" class="grd-txt">
+                  {{row.SNo}}
+                </ion-col>
+                <ion-col ioncol size="1.5" class="grd-txt">
+                  {{row.CategoryShortName}}
+                </ion-col>
+                <ion-col ioncol size="2" class="grd-txt">
+                  {{row.PurchyNo}}
+                </ion-col>
+                <!-- <ion-col ioncol class="grd-txt">
+                  {{row.PurchyDate | date:'dd/MM/yyyy' }}
+                </ion-col> -->
+                <ion-col ioncol size="2.8" class="grd-txt">
+                  {{row.SupplyDate | date:'dd/MM/yyyy'}}
+                </ion-col>
+                <ion-col ioncol size="2" class="grd-txt">
+                  {{row.Gross_WT}}
+                </ion-col>
+                <ion-col ioncol size="2" class="grd-txt">
+                  {{row.Net_WT}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <ion-label *ngIf="calSupply.length>0">वजन के आंकडे कुंतल मे दर्शाये गये है।</ion-label>
+            <ion-grid *ngIf="calSupply.length == 0">
+              <ion-col size="12">
+                No Record found...
+              </ion-col>
+            </ion-grid>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="fourth">
+          <ion-item slot="header" color="light">
+            <ion-label>संपूर्ण कैलेंडर विवरण</ion-label>
+          </ion-item>
+          <div slot="content">
+            <ion-row ionrow-color>
+              <ion-col size="1.5" class="grd-txt" style="margin-left: 8px;">
+                क्रम
+              </ion-col>
+              <ion-col size="1.5" class="grd-txt">
+                प्रजाति
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                पर्ची
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                प्रति.
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                स्थिति
+              </ion-col>
+              <ion-col size="2.5" class="grd-txt">
+                पर्ची नं.
+              </ion-col>
+            </ion-row>
+            <ion-grid *ngIf="calendarDetails.length > 0" class="scroll">
+              <ion-row *ngFor="let row of calendarDetails">
+                <ion-col ioncol size="1.5" class="grd-txt">
+                  {{row.SNo}}
+                </ion-col>
+                <ion-col ioncol size="1.5" class="grd-txt">
+                  {{row.VarietyTypeName.charAt(0)}}{{row.RatoonName.charAt(0)}}
+                </ion-col>
+                <ion-col ioncol size="2" class="grd-txt">
+                  {{row.PurchyIndex}}/{{row.Purchy}}
+                </ion-col>
+                <ion-col ioncol size="2" class="grd-txt">
+                  {{row.Per}}
+                </ion-col>
+                <ion-col ioncol size="2" class="grd-txt">
+                  {{row.StatusName}}
+                </ion-col>
+                <ion-col ioncol size="2.5" class="grd-txt">
+                  {{row.Purchy_No}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <ion-grid *ngIf="calendarDetails.length == 0">
+              <ion-col size="12">No Record Found...</ion-col>
+            </ion-grid>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="fifth">
+          <ion-item slot="header" color="light">
+            <ion-label>बगैर सप्लाई कैलेंडर विवरण</ion-label>
+          </ion-item>
+          <div slot="content">
+            <ion-row ionrow-color>
+              <ion-col size="1.5" class="grd-txt" style="margin-left: 8px;">
+                क्रम
+              </ion-col>
+              <ion-col size="1.5" class="grd-txt">
+                प्रजाति
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                पर्ची
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                प्रति.
+              </ion-col>
+              <ion-col size="2.5" class="grd-txt">
+                पर्ची तिथि
+              </ion-col>
+              <ion-col size="2" class="grd-txt">
+                पर्ची नं.
+              </ion-col>
+            </ion-row>
+            <ion-grid *ngIf="nonSupCalInfo.length > 0">
+              <ion-grid *ngIf="nonSupCalInfo.length > 0" class="scroll">
+                <ion-row *ngFor="let row of nonSupCalInfo">
+                  <ion-col ioncol size="1.5" class="grd-txt">
+                    {{row.SNo}}
+                  </ion-col>
+                  <ion-col ioncol size="1.5" class="grd-txt">
+                    {{row.VarietyTypeName.charAt(0)}}{{row.RatoonName.charAt(0)}}
+                  </ion-col>
+                  <ion-col ioncol size="2" class="grd-txt">
+                    {{row.PurchyIndex}}/{{row.Purchy}} - {{row.StatusName.charAt(0)}}
+                  </ion-col>
+                  <ion-col ioncol size="2" class="grd-txt">
+                    {{row.Per}}
+                  </ion-col>
+                  <ion-col ioncol size="2.5" class="grd-txt">
+                    {{row.Purchy_Date | date:'dd/MM/yyyy'}}
+                  </ion-col>
+                  <ion-col ioncol size="2" class="grd-txt">
+                    {{row.Purchy_No}}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+            <ion-grid *ngIf="nonSupCalInfo.length == 0">
+              <ion-col size="12">No Record Found...</ion-col>
+            </ion-grid>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-col>
+    <div linespace><br /><br /></div>
+  </ion-row>
+</ion-content>
+
+<!-- <ion-item-group *ngFor="let group of calendarDetails | groupBy: 'VarietyTypeName'">
+    <ion-item-divider color="light">
+      {{ group.key }}
+    </ion-item-divider>
+</ion-item-group> -->

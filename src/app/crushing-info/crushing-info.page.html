@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="hdr">पिराई के आकड़े</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-row class="ion-margin">
+    <ion-col size="12">
+      <div linespace></div>
+      <ion-button color="primary" (click)="loadData()">विवरण देखे</ion-button>
+      <div linespace></div>
+      <ion-grid>
+        <ion-row ionrow-color>
+          <ion-col>
+            दिनांक/घंटे
+          </ion-col>
+          <ion-col class="text-right">
+            पिराई (कु.)
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of crushing">
+          <ion-col ioncol>
+            {{row.Code}}
+          </ion-col>
+          <ion-col class="text-right" ioncol>
+            {{row.Name}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+  </ion-row>
+</ion-content>

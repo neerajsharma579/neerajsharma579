@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="hdr">यार्ड की स्थिति</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row class="ion-margin">
+    <!-- <ion-col size="9">
+      <ion-item transparent>
+        <ion-label class="mrt">किसान कोड</ion-label>
+        <ion-input type="tel" inputmode="numeric" maxlength="15" [(ngModel)]="gCode" [disabled]="isDisble" clearInput>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+     -->
+    <ion-col size="3">
+      <ion-button color="primary" class="mtr-18 btn-mtrl" (click)="growerData()">विवरण देखे</ion-button>
+    </ion-col>
+    <ion-col size="12">
+      <!-- <grower-info [kisanInfo]="growerInfo"></grower-info>
+      <div linespace></div> -->
+      <ion-grid>
+        <ion-row ionrow-color>
+          <ion-col>
+            प्रकार
+          </ion-col>
+          <ion-col>
+            टोकन
+          </ion-col>
+          <ion-col>
+            ग्रोस
+          </ion-col>
+          <ion-col>
+            कुल
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of gYard">
+          <ion-col ioncol>
+            {{row.Mode}}
+          </ion-col>
+          <ion-col ioncol>
+            {{row.Tokened}}
+          </ion-col>
+          <ion-col ioncol>
+            {{row.Grossed}}
+          </ion-col>
+          <ion-col ioncol>
+            {{row.Total}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+  </ion-row>
+</ion-content>

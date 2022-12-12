@@ -1,0 +1,57 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="hdr">गन्ने का सर्वे</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row class="ion-margin">
+    <ion-col size="9">
+      <ion-item transparent>
+        <ion-label class="mrt">किसान कोड</ion-label>
+        <ion-input type="tel" inputmode="numeric" maxlength="15" [(ngModel)]="gCode" [disabled]="isDisble" clearInput>
+        </ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button color="primary" class="mtr-18 btn-mtrl" (click)="growerData()" [disabled]="!gCode">विवरण देखे
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="12">
+      <grower-info [kisanInfo]="growerInfo"></grower-info>
+      <div linespace></div>
+      <ion-grid>
+        <ion-row ionrow-color>
+          <ion-col>
+            प्रजाति
+          </ion-col>
+          <ion-col>
+            पेडी/पौधा
+          </ion-col>
+          <ion-col>
+            क्षेत्रफल (ए.)
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of gSurvey">
+          <ion-col ioncol>
+            {{row.Var_Name}}
+          </ion-col>
+          <ion-col ioncol>
+            {{row.RatoonName}}
+          </ion-col>
+          <ion-col ioncol>
+            {{row.Area}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+  </ion-row>
+</ion-content>
